@@ -1,0 +1,78 @@
+
+                   @@@@@@                          @@@    @@@
+                     @@                             @@     @ 
+                     @@                             @@@    @ 
+                     @@           @@@       @@@     @ @@   @ 
+                     @@         @@   @@   @@   @@   @ @@   @ 
+                     @@        @@     @@ @@     @@  @  @@  @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@      @ @@     @@ @@     @@  @    @@@ 
+                     @@     @   @@   @@   @@   @@   @     @@ 
+                   @@@@@@@@@@     @@@       @@@    @@@    @@ 
+
+                           Local optimization on Nets
+
+             Alliance CAD System 5.0 20090901, loon 5.0 [2003/12/07]
+             Copyright (c) 2000-2019,                 ASIM/LIP6/UPMC
+             Author(s):                              François Donnet
+             E-mail        :             alliance-users@asim.lip6.fr
+
+	MBK_IN_LO	: vst
+	MBK_OUT_LO	: vst
+	MBK_TARGET_LIB	: /usr/lib/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'codej_b.vst'...
+Controlling file 'paramfile.lax'...
+Reading lib '/usr/lib/alliance/cells/sxlib'...
+Capacitances on file 'codej_b.vst'...
+Delays on file 'codej_b.vst'...2286 ps
+Area on file 'codej_b.vst'...58500 lamda² (with over-cell routing)
+Details...
+	inv_x2: 9 (11%)
+	na3_x1: 5 (10%)
+	na2_x1: 4 (6%)
+	no2_x1: 3 (5%)
+	sff1_x4: 3 (23%)
+	o2_x2: 3 (6%)
+	na4_x1: 2 (5%)
+	no4_x1: 2 (5%)
+	oa22_x2: 2 (5%)
+	no3_x1: 2 (4%)
+	o3_x2: 2 (5%)
+	o4_x2: 1 (2%)
+	on12_x1: 1 (2%)
+	oa2ao222_x2: 1 (4%)
+	a2_x2: 1 (2%)
+	Total: 41
+Worst RC on file 'codej_b.vst'...342 ps
+Inserting buffers on critical path for file 'codej_b_l.vst'...None inserted
+Improving RC on critical path for file 'codej_b_l.vst'...2234 ps
+Improving all RC for file 'codej_b_l.vst'...
+Worst RC on file 'codej_b_l.vst'...342 ps
+Area on file 'codej_b_l.vst'...58750 lamda² (with over-cell routing)
+Details...
+	inv_x2: 8 (10%)
+	na3_x1: 5 (10%)
+	na2_x1: 4 (6%)
+	no2_x1: 3 (5%)
+	sff1_x4: 3 (22%)
+	o2_x2: 3 (6%)
+	na4_x1: 2 (5%)
+	no4_x1: 2 (5%)
+	oa22_x2: 2 (5%)
+	no3_x1: 2 (4%)
+	o3_x2: 2 (5%)
+	o4_x2: 1 (2%)
+	inv_x4: 1 (1%)
+	on12_x1: 1 (2%)
+	oa2ao222_x2: 1 (4%)
+	a2_x2: 1 (2%)
+	Total: 41
+Critical path (no warranty)...2234 ps from 'fsm_current_state 2' to 'fsm_current_state_1_ins'
+Saving file 'codej_b_l.vst'...
+Saving delay gradient in xsch color file 'codej_b_l.xsc'...
+End of loon...
+

@@ -1,0 +1,120 @@
+N:alarm:15:1084 ps
+N:ao22_x2_sig:31:2182 ps
+N:aux2:13:928 ps
+N:clk:0:0 ps
+N:code 0:0:0 ps
+N:code 1:0:0 ps
+N:code 2:0:0 ps
+N:code 3:0:0 ps
+N:daytime:0:0 ps
+N:door:15:1084 ps
+N:fsm_current_state 0:7:513 ps
+N:fsm_current_state 1:7:513 ps
+N:fsm_current_state 2:7:521 ps
+N:fsm_current_state 3:7:527 ps
+N:fsm_current_state 4:7:527 ps
+N:fsm_current_state 5:7:517 ps
+N:fsm_current_state 6:7:527 ps
+N:inv_x2_2_sig:9:665 ps
+N:inv_x2_sig:1:136 ps
+N:mbk_buf_fsm_current_state 6:13:944 ps
+N:mbk_buf_not_fsm_current_state 6:15:1089 ps
+N:na2_x1_2_sig:18:1314 ps
+N:na2_x1_3_sig:5:388 ps
+N:na2_x1_sig:10:736 ps
+N:na4_x1_2_sig:23:1670 ps
+N:na4_x1_3_sig:8:610 ps
+N:na4_x1_sig:25:1758 ps
+N:no2_x1_2_sig:24:1720 ps
+N:no2_x1_3_sig:12:902 ps
+N:no2_x1_4_sig:25:1795 ps
+N:no2_x1_5_sig:18:1297 ps
+N:no2_x1_sig:15:1098 ps
+N:noa22_x1_2_sig:28:1999 ps
+N:noa22_x1_sig:12:872 ps
+N:not_aux0:7:507 ps
+N:not_aux1:7:529 ps
+N:not_aux2:15:1104 ps
+N:not_aux4:6:491 ps
+N:not_aux6:8:591 ps
+N:not_aux8:12:859 ps
+N:not_aux9:14:1034 ps
+N:not_code 0:2:160 ps
+N:not_code 1:0:0 ps
+N:not_code 2:0:0 ps
+N:not_code 3:3:263 ps
+N:not_daytime:2:176 ps
+N:not_fsm_current_state 3:9:688 ps
+N:not_fsm_current_state 4:9:688 ps
+N:not_fsm_current_state 5:9:698 ps
+N:not_fsm_current_state 6:9:649 ps
+N:o2_x2_2_sig:12:861 ps
+N:o2_x2_3_sig:21:1483 ps
+N:o2_x2_sig:19:1402 ps
+N:o3_x2_2_sig:24:1746 ps
+N:o3_x2_sig:22:1558 ps
+N:o4_x2_sig:21:1517 ps
+N:oa22_x2_sig:16:1163 ps
+N:oa2a2a23_x2_sig:32:2250 ps
+N:on12_x1_sig:24:1735 ps
+N:reset:0:0 ps
+B:mbk_buf_fsm_current_state 6:13:944 ps
+B:mbk_buf_not_fsm_current_state 6:15:1089 ps
+B:door_ins:15:1084 ps
+B:alarm_ins:15:1084 ps
+B:fsm_current_state_6_ins:7:527 ps
+B:ao22_x2_ins:31:2182 ps
+B:o3_x2_2_ins:24:1746 ps
+B:no2_x1_5_ins:18:1297 ps
+B:na2_x1_3_ins:5:388 ps
+B:fsm_current_state_5_ins:7:517 ps
+B:no2_x1_4_ins:25:1795 ps
+B:o3_x2_ins:22:1558 ps
+B:fsm_current_state_4_ins:7:527 ps
+B:no2_x1_3_ins:12:902 ps
+B:na4_x1_3_ins:8:610 ps
+B:fsm_current_state_3_ins:7:527 ps
+B:no2_x1_2_ins:24:1720 ps
+B:o2_x2_3_ins:21:1483 ps
+B:fsm_current_state_2_ins:7:521 ps
+B:no2_x1_ins:15:1098 ps
+B:o2_x2_2_ins:12:861 ps
+B:fsm_current_state_1_ins:7:513 ps
+B:noa22_x1_2_ins:28:1999 ps
+B:on12_x1_ins:24:1735 ps
+B:o4_x2_ins:21:1517 ps
+B:inv_x2_2_ins:9:665 ps
+B:fsm_current_state_0_ins:7:513 ps
+B:oa2a2a23_x2_ins:32:2250 ps
+B:noa22_x1_ins:12:872 ps
+B:na4_x1_2_ins:23:1670 ps
+B:na2_x1_2_ins:18:1314 ps
+B:na4_x1_ins:25:1758 ps
+B:na2_x1_ins:10:736 ps
+B:o2_x2_ins:19:1402 ps
+B:oa22_x2_ins:16:1163 ps
+B:aux2_ins:13:928 ps
+B:not_code_0_ins:2:160 ps
+B:not_code_3_ins:3:263 ps
+B:not_daytime_ins:2:176 ps
+B:not_aux6_ins:8:591 ps
+B:inv_x2_ins:1:136 ps
+B:not_aux8_ins:12:859 ps
+B:not_aux1_ins:7:529 ps
+B:not_fsm_current_state_6_ins:9:649 ps
+B:not_aux9_ins:14:1034 ps
+B:not_aux0_ins:7:507 ps
+B:not_aux2_ins:15:1104 ps
+B:not_fsm_current_state_4_ins:9:688 ps
+B:not_fsm_current_state_5_ins:9:698 ps
+B:not_fsm_current_state_3_ins:9:688 ps
+B:not_aux4_ins:6:491 ps
+C:alarm:15:1084 ps
+C:door:15:1084 ps
+C:code 0:0:0 ps
+C:code 1:0:0 ps
+C:code 2:0:0 ps
+C:code 3:0:0 ps
+C:reset:0:0 ps
+C:daytime:0:0 ps
+C:clk:0:0 ps

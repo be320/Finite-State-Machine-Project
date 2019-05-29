@@ -1,0 +1,85 @@
+-- VHDL data flow description generated from `codeo_b`
+--		date : Fri Apr 19 17:04:35 2019
+
+
+-- Entity Declaration
+
+ENTITY codeo_b IS
+  PORT (
+  clk : in BIT;	-- clk
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  code : in bit_vector(3 DOWNTO 0) ;	-- code
+  door : out BIT;	-- door
+  alarm : out BIT	-- alarm
+  );
+END codeo_b;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF codeo_b IS
+  SIGNAL fsm_current_state : REG_VECTOR(6 DOWNTO 0) REGISTER;	-- fsm_current_state
+  SIGNAL aux0 : BIT;		-- aux0
+  SIGNAL aux1 : BIT;		-- aux1
+  SIGNAL aux2 : BIT;		-- aux2
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL aux6 : BIT;		-- aux6
+  SIGNAL aux8 : BIT;		-- aux8
+  SIGNAL aux9 : BIT;		-- aux9
+
+BEGIN
+  aux9 <= (aux1 AND fsm_current_state(6));
+  aux8 <= NOT(aux6 OR (NOT(daytime) AND code(3)));
+  aux6 <= ((NOT(code(0)) OR code(1)) OR NOT(code(2)));
+  aux4 <= NOT((code(0) OR code(1)) OR code(2));
+  aux2 <= NOT(aux0 OR code(2));
+  aux1 <= (NOT(reset) OR daytime);
+  aux0 <= (code(0) OR NOT(code(1)));
+  label0 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (0) <= GUARDED ((NOT(aux8) AND fsm_current_state(2)) OR ((aux9 
+OR (NOT(aux2) AND fsm_current_state(4)) OR 
+fsm_current_state(5) OR fsm_current_state(3)) AND (aux6 OR NOT(
+daytime)) AND code(3)) OR (((NOT(aux4) AND 
+fsm_current_state(3)) OR (NOT(aux2) AND aux9) OR (
+fsm_current_state(5) AND (aux0 OR NOT(code(2)))) OR 
+fsm_current_state(4)) AND NOT(code(3))));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (1) <= GUARDED ((((fsm_current_state(5) OR fsm_current_state(4) 
+OR fsm_current_state(6) OR fsm_current_state(3)) 
+AND code(3)) OR fsm_current_state(2)) AND aux8);
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (2) <= GUARDED (aux4 AND fsm_current_state(3) AND NOT(code(3)));
+  END BLOCK label2;
+  label3 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (3) <= GUARDED (aux2 AND fsm_current_state(4) AND code(3));
+  END BLOCK label3;
+  label4 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (4) <= GUARDED (fsm_current_state(5) AND NOT(code(0)) AND 
+code(1) AND code(2) AND NOT(code(3)));
+  END BLOCK label4;
+  label5 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (5) <= GUARDED (aux2 AND aux1 AND fsm_current_state(6) AND NOT(
+code(3)));
+  END BLOCK label5;
+  label6 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (6) <= GUARDED (((reset AND NOT(daytime) AND 
+fsm_current_state(6)) OR fsm_current_state(1) OR fsm_current_state(0)
+) AND (reset OR NOT(daytime)));
+  END BLOCK label6;
+
+alarm <= fsm_current_state(0);
+
+door <= fsm_current_state(1);
+END;

@@ -1,0 +1,69 @@
+
+                  @@@@@@@                             @@@@ @  
+                    @@   @@                         @@    @@  
+                    @@    @@                       @@      @  
+                    @@    @@     @@@       @@@    @@          
+                    @@   @@    @@   @@   @@   @@  @@          
+                    @@@@@@    @@     @@ @@     @@ @@     @@@@@
+                    @@    @@  @@     @@ @@     @@ @@     @ @@ 
+                    @@     @@ @@     @@ @@     @@ @@    @  @@ 
+                    @@     @@ @@     @@ @@     @@  @@      @@ 
+                    @@    @@   @@   @@   @@   @@    @@    @@  
+                  @@@@@@@@       @@@       @@@        @@@@    
+
+                         Binding and Optimizing On Gates
+
+             Alliance CAD System 5.0 20090901, boog 5.0 [2003/01/09]
+             Copyright (c) 2000-2019,                 ASIM/LIP6/UPMC
+             Author(s):                              François Donnet
+             E-mail        :             alliance-users@asim.lip6.fr
+
+        MBK_VDD        : vdd
+        MBK_VSS        : vss
+        MBK_IN_LO      : vst
+        MBK_OUT_LO     : vst
+        MBK_WORK_LIB   : .
+        MBK_TARGET_LIB : /usr/lib/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'coder_b.vbe'...
+Controlling file 'paramfile.lax'...
+Controlling file 'coder_b.vbe'...
+Reading lib '/usr/lib/alliance/cells/sxlib'...
+Controlling lib '/usr/lib/alliance/cells/sxlib'...
+Preparing file 'coder_b.vbe'...
+Capacitances on file 'coder_b.vbe'...
+Unflattening file 'coder_b.vbe'...
+Mapping file 'coder_b.vbe'...
+Saving file 'coder_b.vst'...
+Adding signal 'not_code 1'
+Quick estimated critical path (no warranty)...2919 ps from 'fsm_current_state 0' to 'fsm_current_state 0'
+Quick estimated area (with over-cell routing)...103500 lambda²
+Details...
+	inv_x2: 12
+	no2_x1: 10
+	a2_x2: 8
+	na2_x1: 6
+	o2_x2: 5
+	noa22_x1: 4
+	sff1_x4: 3
+	oa2ao222_x2: 3
+	buf_x2: 2
+	oa22_x2: 2
+	on12_x1: 2
+	a3_x2: 2
+	nxr2_x1: 2
+	na4_x1: 2
+	na3_x1: 2
+	no3_x1: 2
+	o3_x2: 1
+	oa2a2a23_x2: 1
+	ao2o22_x2: 1
+	o4_x2: 1
+	nao22_x1: 1
+	xr2_x1: 1
+	Total: 73
+Saving delay gradient in xsch color file 'coder_b.xsc'...
+End of boog...
+

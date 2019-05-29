@@ -1,0 +1,522 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_arith.ALL;
+use IEEE.STD_LOGIC_unsigned.ALL;
+
+entity fsm_tb is
+    end entity fsm_tb;
+
+    architecture tb_arch of fsm_tb is
+        component codej_b_l is
+            port (
+      clk     : in      bit;
+      vdd     : in      bit;
+      vss     : in      bit;
+      daytime : in      bit;
+      reset   : in      bit;
+      code    : in      bit_vector(3 downto 0);
+      door    : out     bit;
+      alarm   : out     bit
+ );
+ end component codej_b_l;
+	component codej_b_l_scan is
+   port (
+      clk     : in      bit;
+      vdd     : in      bit;
+      vss     : in      bit;
+      daytime : in      bit;
+      reset   : in      bit;
+      code    : in      bit_vector(3 downto 0);
+      door    : out     bit;
+      alarm   : out     bit;
+      scanin  : in      bit;
+      test    : in      bit;
+      scanout : out     bit
+ );
+end component codej_b_l_scan;
+            
+            signal clk:bit :='0';
+            signal reset:bit := '1';
+            signal vdd:bit := '1';
+            signal vss:bit := '0';
+            signal daytime:bit := '0';
+            signal door:bit := '0';
+            signal alarm: bit := '0';
+	    signal door_struct:bit := '0';
+            signal alarm_struct: bit := '0';
+	    signal door_scan:bit := '0';
+            signal alarm_scan: bit := '0';
+            signal code:bit_vector(3 downto 0) := "0010";
+	    signal scanin:bit := '0';
+            signal test:bit := '0';
+            signal scanout: bit := '0';
+	    signal sequence:bit_vector(7 downto 0) :="00001111";
+            constant clk_period: time := 50 ns;
+            for fsm_struct: codej_b_l use entity work.codej_b_l(structural);
+			for fsm_moore: codej_b_l use entity work.codej_b_l(moore);
+			for fsm_scan: codej_b_l_scan use entity work.codej_b_l_scan(structural);
+            begin
+                process is 
+                begin
+                    clk <= '0';
+                    wait for clk_period/2;
+                    clk <= '1';
+                    wait for clk_period/2;
+                    end process;
+
+                process is 
+                begin
+reset <= '1';
+test <= '1';
+for i In 0 to sequence'length-1 loop
+wait for clk_period; -- Leave time for the output to stabilize
+if i>=3 then -- Assert condition
+Assert scanout=sequence(i-3)
+Report "scanout does not follow scan in"
+Severity error;
+end if;
+scanin <= sequence(i); -- scanin changes on the next wait statement
+end loop;
+test<='0';
+daytime<='0';
+   --Night    
+	--code<="0010";       
+   wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+   reset<='0';
+                    code<="0010";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                    code<="0110";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                    code<="1010";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                    code<="0000";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                    code<="0101";
+                    wait for 50 ns;
+                    assert door='1' and alarm='0'
+                    report "Door Must Open"
+                    severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+reset<='0';	
+                    code<="0111";
+                    wait for 50 ns;
+                    assert door='0' and alarm='1'
+                    report "Alarm Must Ring"
+                    severity warning;
+
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+reset<='0';	
+                    code<="1101";
+                    wait for 50 ns;
+                    assert door='0' and alarm='1'
+                    report "Alarm Must Ring"
+                    severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+reset<='0';	
+                    code<="0010";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                    code<="1000";
+                    wait for 50 ns;
+                    assert door='0' and alarm='1'
+                    report "Alarm Must Ring"
+                    severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+reset<='0';	
+                    code<="0010";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                    code<="0110";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+                    code<="1101";
+                    wait for 50 ns;
+                    assert door='0' and alarm='1'
+                    report "Alarm Must Ring"
+                    severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+reset<='0';	
+                    code<="0010";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+                    code<="0110";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+                    code<="1010";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+                    code<="0000";
+                    wait for 50 ns;
+                    assert door='0' and alarm='0'
+                    report "there is error"
+                    severity warning;
+                    code<="0101";
+                    wait for 50 ns;
+                    assert door='1' and alarm='0'
+                    report "Door Must Open"
+                    severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+--reset<='0';	
+
+   daytime<='1';
+  --  reset<='1';
+--code<=X"0"; 
+--Morning
+--wait for 50 ns;
+--assert door='0' and alarm='0'
+--report "Reset error"
+--severity warning;
+reset<='0';
+                 code<="0010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                 code<="0110";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                 code<="1010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="0000";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+                 code<="0101";
+                 wait for 50 ns;
+                 assert door='1' and alarm='0'
+                 report "Door Must Open"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+ 
+                 code<="0111";
+                 wait for 50 ns;
+                 assert door='0' and alarm='1'
+                 report "Alarm Must Ring"
+                 severity warning;
+
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+                 code<="1101";
+                 wait for 50 ns;
+                 assert door='1' and alarm='0'
+                 report "Door Must Open"
+                 severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+                 code<="0010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="1001";
+                 wait for 50 ns;
+                 assert door='0' and alarm='1'
+                 report "Alarm Must Ring"
+                 severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+code<="0010";
+wait for 50 ns;
+assert door='0' and alarm='0'
+report "there is error"
+severity warning;
+code<="1101";
+wait for 50 ns;
+assert door='1' and alarm='0'
+report "Door Must Open"
+severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+                 code<="0010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="0110";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+                 code<="1101";
+wait for 50 ns;
+assert door='1' and alarm='0'
+report "Door Must Open"
+severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+                 code<="0010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+                 code<="0110";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="1010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="1101";
+                 wait for 50 ns;
+                 assert door='1' and alarm='0'
+                 report "Door Must Open"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+reset<='0';	
+                code<="0010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+                 code<="0110";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="1010";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+		 code<="0000";
+                 wait for 50 ns;
+                 assert door='0' and alarm='0'
+                 report "there is error"
+                 severity warning;
+                 code<="1101";
+                 wait for 50 ns;
+                 assert door='1' and alarm='0'
+                 report "Door Must Open"
+                 severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+reset<='1';
+code<=X"0"; 
+wait for 50 ns;
+   assert door='0' and alarm='0'
+   report "Reset error"
+   severity warning;
+assert door=door_struct and alarm=alarm_struct
+   report "Behavioral and Structural Behavior are not the same"
+   severity warning;
+assert door_struct=door_scan and alarm_struct=alarm_scan
+   report "Structural and Scan Behaviors are not the same"
+   severity warning;
+reset<='0';	
+
+                    wait;
+                    end process;
+         fsm_struct: codej_b_l port map(clk,vdd,vss,daytime,reset,code,door_struct,alarm_struct);
+		 fsm_moore: codej_b_l port map(clk,vdd,vss,daytime,reset,code,door,alarm);
+		 fsm_scan: codej_b_l_scan port map(clk,vdd,vss,daytime,reset,code,door_scan,alarm_scan,scanin,test,scanout);
+        end architecture tb_arch;
+   

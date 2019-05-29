@@ -1,0 +1,9 @@
+# Encoding figure "fsm"
+-fsm r 3
+salarm	5
+sdoor	2
+schar4	4
+schar3	1
+schar2	7
+schar1	6
+sbegin	3

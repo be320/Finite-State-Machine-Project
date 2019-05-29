@@ -1,0 +1,116 @@
+-- VHDL data flow description generated from `codej`
+--		date : Fri Apr 19 16:45:57 2019
+
+
+-- Entity Declaration
+
+ENTITY codej IS
+  PORT (
+  clk : in BIT;	-- clk
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  code : in bit_vector(3 DOWNTO 0) ;	-- code
+  door : out BIT;	-- door
+  alarm : out BIT	-- alarm
+  );
+END codej;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE VBE OF codej IS
+  SIGNAL fsm_current_state : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- fsm_current_state
+  SIGNAL fsm_current_state_salarm : BIT;		-- fsm_current_state_salarm
+  SIGNAL fsm_next_state_salarm : BIT;		-- fsm_next_state_salarm
+  SIGNAL fsm_current_state_sdoor : BIT;		-- fsm_current_state_sdoor
+  SIGNAL fsm_next_state_sdoor : BIT;		-- fsm_next_state_sdoor
+  SIGNAL fsm_current_state_schar4 : BIT;		-- fsm_current_state_schar4
+  SIGNAL fsm_next_state_schar4 : BIT;		-- fsm_next_state_schar4
+  SIGNAL fsm_current_state_schar3 : BIT;		-- fsm_current_state_schar3
+  SIGNAL fsm_next_state_schar3 : BIT;		-- fsm_next_state_schar3
+  SIGNAL fsm_current_state_schar2 : BIT;		-- fsm_current_state_schar2
+  SIGNAL fsm_next_state_schar2 : BIT;		-- fsm_next_state_schar2
+  SIGNAL fsm_current_state_schar1 : BIT;		-- fsm_current_state_schar1
+  SIGNAL fsm_next_state_schar1 : BIT;		-- fsm_next_state_schar1
+  SIGNAL fsm_current_state_sbegin : BIT;		-- fsm_current_state_sbegin
+  SIGNAL fsm_next_state_sbegin : BIT;		-- fsm_next_state_sbegin
+  SIGNAL fsm_next_state : BIT_VECTOR(2 DOWNTO 0);	-- fsm_next_state
+
+BEGIN
+  fsm_next_state(0) <= (fsm_next_state_schar2 OR fsm_next_state_schar3 
+OR fsm_next_state_sdoor);
+  fsm_next_state(1) <= (fsm_next_state_sbegin OR fsm_next_state_schar1 
+OR fsm_next_state_schar3);
+  fsm_next_state(2) <= (fsm_next_state_sbegin OR fsm_next_state_schar2 
+OR fsm_next_state_schar4);
+  fsm_next_state_sbegin <= ((fsm_current_state_salarm AND (reset OR NOT(
+daytime))) OR (fsm_current_state_sbegin AND reset AND 
+NOT(daytime)) OR (fsm_current_state_sdoor AND (reset
+ OR NOT(daytime))));
+  fsm_current_state_sbegin <= (fsm_current_state(2) AND fsm_current_state(1));
+  fsm_next_state_schar1 <= (fsm_current_state_sbegin AND NOT(code(0)) AND 
+code(1) AND NOT(code(2)) AND NOT(code(3)) AND (NOT(reset
+) OR daytime));
+  fsm_current_state_schar1 <= (NOT(fsm_current_state(2)) AND 
+fsm_current_state(1) AND NOT(fsm_current_state(0)));
+  fsm_next_state_schar2 <= (fsm_current_state_schar1 AND NOT(code(0)) AND 
+code(1) AND code(2) AND NOT(code(3)));
+  fsm_current_state_schar2 <= (fsm_current_state(2) AND fsm_current_state(0));
+  fsm_next_state_schar3 <= (fsm_current_state_schar2 AND NOT(code(0)) AND 
+code(1) AND NOT(code(2)) AND code(3));
+  fsm_current_state_schar3 <= (fsm_current_state(1) AND fsm_current_state(0));
+  fsm_next_state_schar4 <= (fsm_current_state_schar3 AND NOT(code(0)) AND 
+NOT(code(1)) AND NOT(code(2)) AND NOT(code(3)));
+  fsm_current_state_schar4 <= (fsm_current_state(2) AND NOT(
+fsm_current_state(1)) AND NOT(fsm_current_state(0)));
+  fsm_next_state_sdoor <= ((fsm_current_state_schar4 AND code(0) AND NOT(
+code(1)) AND code(2) AND (NOT(code(3)) OR daytime)) OR (
+fsm_current_state_sbegin AND code(0) AND NOT(code(1)) AND code(2) AND 
+code(3) AND daytime) OR (fsm_current_state_schar1 AND 
+code(0) AND NOT(code(1)) AND code(2) AND code(3) AND 
+daytime) OR (fsm_current_state_schar2 AND code(0) AND 
+NOT(code(1)) AND code(2) AND code(3) AND daytime) OR
+ (fsm_current_state_schar3 AND code(0) AND NOT(
+code(1)) AND code(2) AND code(3) AND daytime));
+  fsm_current_state_sdoor <= (NOT(fsm_current_state(2)) AND NOT(
+fsm_current_state(1)) AND fsm_current_state(0));
+  fsm_next_state_salarm <= ((fsm_current_state_sbegin AND (((code(0) OR NOT(
+code(1)) OR code(2) OR code(3)) AND NOT(reset) AND NOT(
+daytime)) OR ((((code(0) OR NOT(code(1)) OR code(2)) AND
+ NOT(code(3))) OR ((NOT(code(0)) OR code(1) OR NOT
+(code(2))) AND code(3))) AND daytime))) OR (
+fsm_current_state_schar1 AND (((code(0) OR NOT(code(1)) OR NOT(code(2)) 
+OR code(3)) AND NOT(daytime)) OR ((code(0) OR NOT(
+code(1)) OR NOT(code(2))) AND NOT(code(3))) OR ((NOT(
+code(0)) OR code(1) OR NOT(code(2))) AND code(3)))) OR (
+fsm_current_state_schar2 AND (((code(0) OR NOT(code(1)) OR code(2) OR NOT
+(code(3))) AND NOT(daytime)) OR ((code(0) OR NOT(
+code(1))) AND NOT(code(2))) OR ((NOT(code(0)) OR code(1)
+) AND code(2)) OR NOT(code(3)))) OR (
+fsm_current_state_schar3 AND (((code(0) OR code(1) OR code(2) OR code(3))
+ AND NOT(daytime)) OR ((code(0) OR code(1) OR 
+code(2)) AND NOT(code(3))) OR ((NOT(code(0)) OR code(1) 
+OR NOT(code(2))) AND code(3)))) OR (
+fsm_current_state_schar4 AND (NOT(code(0)) OR code(1) OR NOT(code(2)) OR 
+NOT(NOT(code(3)) OR daytime))));
+  fsm_current_state_salarm <= (NOT(fsm_current_state(2)) AND NOT(
+fsm_current_state(1)) AND NOT(fsm_current_state(0)));
+  label0 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state(0) <= GUARDED fsm_next_state(0);
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state(1) <= GUARDED fsm_next_state(1);
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state(2) <= GUARDED fsm_next_state(2);
+  END BLOCK label2;
+
+alarm <= fsm_current_state_salarm;
+
+door <= fsm_current_state_sdoor;
+END;

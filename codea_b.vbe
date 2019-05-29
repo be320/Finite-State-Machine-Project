@@ -1,0 +1,70 @@
+-- VHDL data flow description generated from `codea_b`
+--		date : Fri Apr 19 17:04:33 2019
+
+
+-- Entity Declaration
+
+ENTITY codea_b IS
+  PORT (
+  clk : in BIT;	-- clk
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  code : in bit_vector(3 DOWNTO 0) ;	-- code
+  door : out BIT;	-- door
+  alarm : out BIT	-- alarm
+  );
+END codea_b;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF codea_b IS
+  SIGNAL fsm_current_state : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- fsm_current_state
+  SIGNAL aux0 : BIT;		-- aux0
+  SIGNAL aux3 : BIT;		-- aux3
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL aux9 : BIT;		-- aux9
+  SIGNAL aux11 : BIT;		-- aux11
+
+BEGIN
+  aux11 <= (code(0) AND (NOT(code(1)) AND code(2)));
+  aux9 <= (((((fsm_current_state(0) AND NOT(
+fsm_current_state(1))) AND NOT(fsm_current_state(2))) AND NOT(code(0)
+)) AND code(1)) AND NOT(code(2)));
+  aux4 <= NOT(fsm_current_state(1) AND fsm_current_state(2)
+);
+  aux3 <= (((fsm_current_state(0) AND fsm_current_state(2))
+ AND NOT(code(0))) AND NOT(code(1)));
+  aux0 <= (NOT(fsm_current_state(0)) AND NOT(
+fsm_current_state(1)));
+  label0 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (0) <= GUARDED ((aux9 AND code(3)) OR (((NOT(aux4) AND NOT(
+code(0)) AND code(1) AND code(2)) OR (aux3 AND NOT(
+code(2)))) AND NOT(code(3))));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (1) <= GUARDED (((fsm_current_state(1) OR NOT(code(1)) OR reset)
+ AND ((NOT(fsm_current_state(0)) AND NOT(
+fsm_current_state(2)) AND NOT(code(0)) AND code(1)) OR aux3) AND NOT(
+code(2)) AND NOT(code(3))) OR (((NOT(daytime) AND NOT(
+fsm_current_state(1))) OR reset) AND aux4 AND (NOT(daytime) OR NOT(
+fsm_current_state(1))) AND NOT(fsm_current_state(0))));
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((clk'STABLE)) AND clk) = '1')
+  BEGIN
+    fsm_current_state (2) <= GUARDED ((((daytime AND NOT(aux0) AND aux11) OR aux9) AND
+ code(3)) OR (((fsm_current_state(0) AND 
+fsm_current_state(1) AND aux11) OR ((daytime OR NOT(reset)) AND NOT(
+fsm_current_state(0)) AND fsm_current_state(1) AND NOT(
+fsm_current_state(2)) AND NOT(code(0)) AND code(1) AND NOT(code(2))))
+ AND NOT(code(3))));
+  END BLOCK label2;
+
+alarm <= (aux0 AND NOT(fsm_current_state(2)));
+
+door <= (aux0 AND fsm_current_state(2));
+END;
